@@ -6,6 +6,7 @@ import DetailPanel from "./components/DetailPanel.jsx";
 import BottomPanel from "./components/BottomPanel.jsx";
 import CompareModal from "./components/CompareModal.jsx";
 import LearningLab from "./components/LearningLab.jsx";
+import Chatbot from "./components/Chatbot.jsx";
 import { chemistryObjects, getObjectById } from "./data/chemistryObjects.js";
 
 const emptyProgress = { text: false, voice: false, quiz: false, activity: false };
@@ -89,6 +90,7 @@ export default function App() {
         <strong>Interactive Chemistry Visualization Lab</strong>
       </footer>
       {toast && <div className="toast">{toast}</div>}
+      <Chatbot />
     </div>
   );
 }
