@@ -31,13 +31,13 @@ export default function Chatbot() {
 
   // Chemistry keyword filter list (Strict chemistry-only constraint)
   const chemistryKeywords = [
-    "chem", "atom", "molecule", "bond", "reaction", "periodic", "element", "water", "co2", 
-    "methane", "ammonia", "benzene", "nacl", "salt", "graphite", "hydrogen", "chlorine", 
-    "covalent", "ionic", "ph", "acid", "base", "alkali", "buffer", "molar", "mass", "temp", 
-    "boil", "melt", "geometry", "orbital", "hybrid", "valence", "electron", "proton", 
-    "neutron", "nucleus", "combustion", "haber", "electrolysis", "thermodynamic", "exo", 
-    "endo", "enthalpy", "entropy", "equilibrium", "catalyst", "formula", "balance", 
-    "coefficient", "organic", "polymer", "metal", "halogen", "noble", "alkane", "alkene", 
+    "chem", "atom", "molecule", "bond", "reaction", "periodic", "element", "water", "co2",
+    "methane", "ammonia", "benzene", "nacl", "salt", "graphite", "hydrogen", "chlorine",
+    "covalent", "ionic", "ph", "acid", "base", "alkali", "buffer", "molar", "mass", "temp",
+    "boil", "melt", "geometry", "orbital", "hybrid", "valence", "electron", "proton",
+    "neutron", "nucleus", "combustion", "haber", "electrolysis", "thermodynamic", "exo",
+    "endo", "enthalpy", "entropy", "equilibrium", "catalyst", "formula", "balance",
+    "coefficient", "organic", "polymer", "metal", "halogen", "noble", "alkane", "alkene",
     "alkyne", "ether", "ester", "alcohol", "ketone", "aldehyde", "carboxyl", "carbo",
     "amine", "peptide", "protein", "dna", "spectroscopy", "titration", "matter", "solid",
     "liquid", "gas", "vapor", "sublime", "lattice", "solute", "solvent", "solution"
@@ -50,7 +50,7 @@ export default function Chatbot() {
 
   const getOfflineChemistryResponse = (query) => {
     const lower = query.toLowerCase();
-    
+
     if (lower.includes("water") || lower.includes("h2o")) {
       return "Water (H₂O) is a bent, polar molecule with a bond angle of 104.5°. Its oxygen is sp³ hybridized. Because oxygen is highly electronegative (3.44), it pulls electron density to create partial charges, allowing robust hydrogen-bonding networks that give water anomalous boiling points and solid ice density patterns.";
     }
@@ -127,7 +127,7 @@ export default function Chatbot() {
     } else {
       // Live Gemini API mode
       try {
-        const systemInstruction = 
+        const systemInstruction =
           "You are Alchemist AI, an expert chemistry tutoring assistant. You must ONLY answer chemistry-related questions. " +
           "If the user asks about non-chemistry topics (such as general history, coding non-chemistry scripts, sports, news, general creative writing, " +
           "or casual chat unrelated to science), politely decline to answer, explaining that you are trained exclusively as a Chemistry Tutor.";
@@ -142,7 +142,7 @@ export default function Chatbot() {
           ]
         };
 
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         const response = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -150,7 +150,14 @@ export default function Chatbot() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to contact Gemini API. Please check your API key.");
+          let detailedMsg = "Failed to contact Gemini API.";
+          try {
+            const errData = await response.json();
+            if (errData.error?.message) {
+              detailedMsg = errData.error.message;
+            }
+          } catch (_) {}
+          throw new Error(detailedMsg);
         }
 
         const data = await response.json();
@@ -166,10 +173,10 @@ export default function Chatbot() {
           prev.map((m) =>
             m.id === botMsgPlaceholderId
               ? {
-                  ...m,
-                  id: Date.now().toString(),
-                  text: `⚠️ Error: ${err.message}. Please double-check your Gemini API key in settings.`
-                }
+                ...m,
+                id: Date.now().toString(),
+                text: `⚠️ Error: ${err.message}. Please double-check your Gemini API key in settings.`
+              }
               : m
           )
         );
