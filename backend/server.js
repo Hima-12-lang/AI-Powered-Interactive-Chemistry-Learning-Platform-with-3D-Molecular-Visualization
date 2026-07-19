@@ -12,7 +12,12 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL && !process.env.DATABASE_URL.includes("localhost") && !process.env.DATABASE_URL.includes("127.0.0.1")
+    ? { rejectUnauthorized: false }
+    : false
+});
 const JWT_SECRET = process.env.JWT_SECRET || "change-this-secret";
 
 const authMiddleware = (req, res, next) => {
@@ -120,6 +125,14 @@ app.post("/api/progress", authMiddleware, async (req, res) => {
 
 app.get("/api/me", authMiddleware, async (req, res) => {
   res.json({ email: req.user.email, userId: req.user.userId });
+});
+
+// Serve static files from the React frontend build directory
+app.use(express.static(path.join(__dirname, "../dist")));
+
+// Any other routes should serve index.html (client-side routing)
+app.get("*splat", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 const PORT = process.env.PORT || 4000;

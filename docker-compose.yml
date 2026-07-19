@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: studio_user
+      POSTGRES_PASSWORD: strongpassword
+      POSTGRES_DB: chemistry_studio
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://studio_user:strongpassword@db:5432/chemistry_studio
+      JWT_SECRET: replace-with-a-long-random-secret-for-production-use
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
