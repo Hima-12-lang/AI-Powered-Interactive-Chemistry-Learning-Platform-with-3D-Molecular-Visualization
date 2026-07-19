@@ -85,6 +85,137 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
 }
 
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 25%, rgba(141, 230, 232, 0.16), transparent 35%),
+    linear-gradient(180deg, rgba(4, 13, 22, 1), rgba(4, 13, 22, 0.96));
+}
+
+.auth-card {
+  width: min(460px, 100%);
+  background: rgba(5, 15, 30, 0.9);
+  border: 1px solid rgba(141, 230, 232, 0.12);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  border-radius: 28px;
+  padding: 32px;
+}
+
+.auth-card h2 {
+  margin-bottom: 12px;
+  font-size: 1.75rem;
+}
+
+.auth-card p {
+  margin-bottom: 24px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.auth-card label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-card input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(141, 230, 232, 0.14);
+  border-radius: 16px;
+  color: var(--text-main);
+  font: inherit;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: rgba(141, 230, 232, 0.5);
+  box-shadow: 0 0 0 4px rgba(141, 230, 232, 0.08);
+}
+
+.auth-button,
+.logout-button,
+.auth-switch {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-button {
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #5bb8ff, #b99cff);
+  color: #040d16;
+}
+
+.auth-switch {
+  margin-top: 18px;
+  padding: 12px 16px;
+  background: transparent;
+  color: var(--text-main);
+  border-color: rgba(141, 230, 232, 0.12);
+}
+
+.auth-error {
+  margin-top: 8px;
+  padding: 12px 14px;
+  color: #ffb3b3;
+  background: rgba(255, 90, 103, 0.12);
+  border: 1px solid rgba(255, 90, 103, 0.18);
+  border-radius: 16px;
+}
+
+.profile-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 16px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(141, 230, 232, 0.14);
+  backdrop-filter: blur(16px);
+}
+
+.profile-banner strong {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.profile-banner p {
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.logout-button {
+  width: auto;
+  padding: 12px 18px;
+  color: #effcff;
+  background: rgba(141, 230, 232, 0.08);
+  border-color: rgba(141, 230, 232, 0.18);
+}
+
+.logout-button:hover,
+.auth-switch:hover,
+.auth-button:hover {
+  opacity: 0.94;
+}
+
 .header {
   display: flex;
   align-items: center;

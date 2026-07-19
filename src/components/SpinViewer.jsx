@@ -29,6 +29,7 @@ export default function SpinViewer({ object, onScreenshot, onExport }) {
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.code === "Space") {
+        if (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA" || event.target.isContentEditable) return;
         event.preventDefault();
         setAutoRotate((value) => !value);
       }
